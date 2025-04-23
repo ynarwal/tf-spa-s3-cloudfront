@@ -37,3 +37,13 @@ jobs:
       - name: Build dist file
         run: npm run build
 
+      - name: Initialise terraform
+        run: |
+          terraform init \
+            -backend-config="bucket=${AWS_BUCKET}" \
+            -backend-config="key=${TF_STATE_KEY}" \
+            -backend-config="region=${AWS_REGION}"
+        env:
+          AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
+          TF_STATE_KEY: ${{ secrets.TF_STATE_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
