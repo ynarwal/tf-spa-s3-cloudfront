@@ -146,7 +146,7 @@ resource "aws_s3_bucket_policy" "app" {
 
 resource "null_resource" "build_app" {
   triggers = {
-    always_run = timestamp()
+    content_hash = sha1(join("", [for f in fileset("./src", "**"): filesha1("./src/${f}")]))
   }
 
   provisioner "local-exec" {
