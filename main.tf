@@ -21,14 +21,14 @@ resource "aws_s3_bucket" "app" {
 resource "aws_s3_bucket_ownership_controls" "bucket_ownership" {
   bucket = aws_s3_bucket.app.id
   rule {
-    object_ownership = "BucketOwnerEnforced" # Disable ACLs for simplicity
+    object_ownership = "BucketOwnerEnforced"
   }
 }
 
 resource "aws_s3_bucket_public_access_block" "public_access" {
   bucket                  = aws_s3_bucket.app.id
   block_public_acls       = true
-  block_public_policy     = false # Allow bucket policy for CloudFront
+  block_public_policy     = false
   ignore_public_acls      = true
   restrict_public_buckets = true
 }
@@ -109,7 +109,7 @@ resource "aws_cloudfront_distribution" "app" {
   }
 
   viewer_certificate {
-    cloudfront_default_certificate = true # Use default CloudFront cert for now
+    cloudfront_default_certificate = true
   }
 }
 
