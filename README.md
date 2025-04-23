@@ -1,23 +1,6 @@
 
 ## Sample Deployment: Terraform + AWS CloudFront + S3 (Static Website Hosting)
 
-This guide demonstrates how to deploy a Single Page Application (SPA) using a combination of Terraform, Amazon S3 (for static file hosting), and CloudFront (for global content delivery).
-
-### Steps to Deploy
-
-#### 1. Build the SPA
-
-```bash
-npm run build
-```
-#### 2. Deploy Infrastructure with Terraform
-With your static files ready, you can now use Terraform to provision the required AWS resources, including:
-
-- An S3 bucket configured for static website hosting
-- A CloudFront distribution to serve your content globally with low latency
-
-
-## Deployment Notes
 
 ### AWS Credentials
 
@@ -28,8 +11,6 @@ With your static files ready, you can now use Terraform to provision the require
 aws_access_key_id = YOUR_ACCESS_KEY
 aws_secret_access_key = YOUR_SECRET_KEY
 ```
-
-Then run Terraform commands like this:
 
 ```bash
 export AWS_PROFILE=terraform
@@ -48,7 +29,9 @@ export AWS_SECRET_ACCESS_KEY=your-secret-key
 
 ### Apply terraform changes
 
-Apply your Terraform configuration by running:
+Initialise your Terraform configuration by running:
+
+This facilitates mulultiple environments deployment by storing states in differnet bucket or different folders within same bucket.
 
 ```bash
 export AWS_REGION=
