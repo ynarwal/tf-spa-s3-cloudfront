@@ -21,13 +21,44 @@ With your static files ready, you can now use Terraform to provision the require
 - A CloudFront distribution to serve your content globally with low latency
 - Optional: Route53 DNS configuration (if you want to use a custom domain)
 
+
+## 🌍 Deployment Notes
+
+### 🔑 AWS Credentials
+
+#### 🟢 Option 1: Use AWS Named Profile (Recommended for local dev)
+
+```ini
+[terraform]
+aws_access_key_id = YOUR_ACCESS_KEY
+aws_secret_access_key = YOUR_SECRET_KEY
+```
+
+Then run Terraform commands like this:
+
+```bash
+export AWS_PROFILE=terraform
+```
+
+#### 🔵 Option 2: Export AWS Keys as Environment Variables
+
+If you're running in CI (e.g., GitHub Actions) or prefer not to use a named profile, you can override credentials by exporting them directly:
+
+```bash
+export AWS_ACCESS_KEY_ID=your-access-key
+export AWS_SECRET_ACCESS_KEY=your-secret-key
+```
+
+
+
+### Apply terraform changes
+
 Apply your Terraform configuration by running:
 
 ```bash
 terraform apply
 ```
 
-Terraform will prompt you to confirm the execution and then provision the infrastructure defined in your `.tf` files.
 
 ### 🌐 Accessing Your Deployed Website
 
@@ -35,4 +66,3 @@ Once the deployment is complete, your application will be accessible via the Clo
 
 **Sample CloudFront URL:**  
 👉 [https://d2l0jwoksfdw2a.cloudfront.net/](https://d2l0jwoksfdw2a.cloudfront.net/)
-

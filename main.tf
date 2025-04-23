@@ -1,6 +1,5 @@
 provider "aws" {
   region  = "ap-southeast-2"
-  profile = "terraform"
 }
 
 variable "env_name" {
@@ -48,7 +47,7 @@ resource "null_resource" "upload_app" {
   }
 
   provisioner "local-exec" {
-    command = "aws s3 sync ./dist/ s3://${aws_s3_bucket.app.bucket}/ --profile=terraform"
+    command = "aws s3 sync ./dist/ s3://${aws_s3_bucket.app.bucket}/"
   }
 }
 
