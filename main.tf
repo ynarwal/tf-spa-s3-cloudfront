@@ -53,12 +53,14 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "app" {
 
 resource "null_resource" "upload_app" {
   triggers = {
-    content_hash = sha1(join("", [for f in fileset("./dist", "**"): filesha1("./dist/${f}")]))
+    content_hash = sha1(join("", [for f in fileset("./src", "**"): filesha1("./src/${f}")]))
   }
 
   provisioner "local-exec" {
     command = "aws s3 sync ./dist/ s3://${aws_s3_bucket.app.bucket}/"
   }
+
+  depends_on = [ null_resource.build_app ]
 }
 
 
@@ -156,24 +158,12 @@ resource "null_resource" "build_app" {
 
 
 resource "null_resource" "invalidate_cache" {
-  depends_on = [aws_cloudfront_distribution.app, null_resource.build_app]
+  depends_on = [aws_cloudfront_distribution.app, null_resource.build_app, null_resource.upload_app]
   triggers = {
-    content_hash = sha1(join("", [for f in fileset("./dist", "**"): filesha1("./dist/${f}")]))
+    content_hash = sha1(join("", [for f in fileset("./src", "**"): filesha1("./src/${f}")]))
   }
   provisioner "local-exec" {
     command = "aws cloudfront create-invalidation --distribution-id ${aws_cloudfront_distribution.app.id} --paths '/*' --profile=terraform"
   }
 
-}
-
-output "s3_bucket_name" {
-  value = aws_s3_bucket.app.bucket
-}
-
-output "cloudfront_domain_name" {
-  value = aws_cloudfront_distribution.app.domain_name
-}
-
-output "cloudfront_distribution_id" {
-  value = aws_cloudfront_distribution.app.id
 }
