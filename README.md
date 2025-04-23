@@ -17,11 +17,11 @@ With your static files ready, you can now use Terraform to provision the require
 - A CloudFront distribution to serve your content globally with low latency
 
 
-## 🌍 Deployment Notes
+## Deployment Notes
 
-### 🔑 AWS Credentials
+### AWS Credentials
 
-#### 🟢 Option 1: Use AWS Named Profile (Recommended for local dev)
+#### Option 1: Use AWS Named Profile (Recommended for local dev)
 
 ```ini
 [terraform]
@@ -35,7 +35,7 @@ Then run Terraform commands like this:
 export AWS_PROFILE=terraform
 ```
 
-#### 🔵 Option 2: Export AWS Keys as Environment Variables
+#### Option 2: Export AWS Keys as Environment Variables
 
 If you're running in CI (e.g., GitHub Actions) or prefer not to use a named profile, you can override credentials by exporting them directly:
 
@@ -55,9 +55,7 @@ terraform apply
 ```
 
 
-### 🌐 Accessing Your Deployed Website
-
-Once the deployment is complete, your application will be accessible via the CloudFront distribution URL. For example:
+### Accessing Your Deployed Website
 
 **Sample CloudFront URL:**  
 👉 [https://d2l0jwoksfdw2a.cloudfront.net/](https://d2l0jwoksfdw2a.cloudfront.net/)
