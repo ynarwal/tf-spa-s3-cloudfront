@@ -51,6 +51,19 @@ export AWS_SECRET_ACCESS_KEY=your-secret-key
 Apply your Terraform configuration by running:
 
 ```bash
+export AWS_REGION=
+export AWS_BUCKET=
+export TF_STATE_KEY=
+```
+
+```bash
+terraform init \
+    -backend-config="bucket=${AWS_BUCKET}" \
+    -backend-config="key=${TF_STATE_KEY}" \
+    -backend-config="region=${AWS_REGION}"
+```
+
+```bash
 terraform apply
 ```
 
@@ -59,3 +72,4 @@ terraform apply
 
 **Sample CloudFront URL:**  
 👉 [https://d2l0jwoksfdw2a.cloudfront.net/](https://d2l0jwoksfdw2a.cloudfront.net/)
+

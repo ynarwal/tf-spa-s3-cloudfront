@@ -28,3 +28,5 @@ dist
 terraform.tfstate
 terraform.tfstate.backup
 .vscode
+
+.env

@@ -1,6 +1,14 @@
 provider "aws" {
-  region  = "ap-southeast-2"
+  region  = local.aws_region
 }
+
+
+terraform {
+  backend "s3" {
+
+  }
+}
+
 
 variable "env_name" {
   description = "The environment to deploy to"
@@ -8,8 +16,10 @@ variable "env_name" {
   default     = "dev"
 }
 
+
 locals {
   app_name = "ex-form-app"
+  aws_region = "ap-southeast-2"
 }
 
 resource "aws_s3_bucket" "app" {
@@ -134,15 +144,26 @@ resource "aws_s3_bucket_policy" "app" {
   })
 }
 
+resource "null_resource" "build_app" {
+  triggers = {
+    always_run = timestamp()
+  }
+
+  provisioner "local-exec" {
+    command = "npm run build"
+  }
+}
+
 
 resource "null_resource" "invalidate_cache" {
-  depends_on = [aws_cloudfront_distribution.app]
+  depends_on = [aws_cloudfront_distribution.app, null_resource.build_app]
   triggers = {
     content_hash = sha1(join("", [for f in fileset("./dist", "**"): filesha1("./dist/${f}")]))
   }
   provisioner "local-exec" {
     command = "aws cloudfront create-invalidation --distribution-id ${aws_cloudfront_distribution.app.id} --paths '/*' --profile=terraform"
   }
+
 }
 
 output "s3_bucket_name" {
