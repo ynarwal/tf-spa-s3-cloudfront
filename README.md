@@ -54,5 +54,4 @@ terraform apply
 ### Accessing Your Deployed Website
 
 **Sample CloudFront URL:**  
-👉 [https://d2l0jwoksfdw2a.cloudfront.net/](https://d2l0jwoksfdw2a.cloudfront.net/)
-
+👉 [https://dgp3s44h49ox4.cloudfront.net/](https://dgp3s44h49ox4.cloudfront.net/)
